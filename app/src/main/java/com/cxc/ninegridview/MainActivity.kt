@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -30,26 +31,30 @@ class MainActivity : AppCompatActivity() {
     private fun initNineGridShow() {
         val nineGridView = findViewById<NineGridView>(R.id.nine_grid_view)
         nineGridView.setInit(
-            9,
-            4,
-            false,
-            mutableListOf(
+            maxSize = 9,
+            spanCount = 4,
+            isEdit = false,
+            data = mutableListOf(
                 ImagePickerBasicBean.getInstance("https://www.wanandroid.com/blogimgs/50c115c2-cf6c-4802-aa7b-a4334de444cd.png"),
                 ImagePickerBasicBean.getInstance("https://www.wanandroid.com/blogimgs/50c115c2-cf6c-4802-aa7b-a4334de444cd.png")
             ),
-            R.layout.list_item_image,
-            R.id.iv_img,
-            R.id.iv_del,
-            R.mipmap.ic_upload_pic,
-            object : NineGridViewListener {
-                override fun bigPicShow(imagesWithoutAdd: List<ImagePickerBasicBean>, pos: Int) {
+            layout_item_resource = R.layout.list_item_image,
+            id_iv = R.id.iv_img,
+            id_iv_del = R.id.iv_del,
+            resource_upload_img = R.mipmap.ic_upload_pic,
+            nineGridViewListener = object : NineGridViewListener {
+                override fun bigPicShowNotify(
+                    imagesWithoutAdd: List<ImagePickerBasicBean>,
+                    pos: Int,
+                    view: View?
+                ) {
                     imagesWithoutAdd.forEach {
                         print(it.getImagePickerUrl())
                     }
                     log("$pos")
                 }
 
-                override fun addNewPic(count: Int) {
+                override fun addNewPicNotify(count: Int) {
                     nineGridView.addImages(
                         mutableListOf(
                             ImagePickerBasicBean.getInstance("https://www.wanandroid.com/blogimgs/50c115c2-cf6c-4802-aa7b-a4334de444cd.png"),
@@ -58,17 +63,21 @@ class MainActivity : AppCompatActivity() {
                     )
                 }
 
-                override fun delPic(pos: Int, imagePickerBasicBean: ImagePickerBasicBean) {
+                override fun delPicNotify(pos: Int, imagePickerBasicBean: ImagePickerBasicBean) {
                     log("${imagePickerBasicBean.getImagePickerUrl()}")
                     log("$pos")
                 }
             },
-            object : ImagePickerEngine {
+            imagePickerEngine =  object : ImagePickerEngine {
                 override fun load(context: Context, image: ImageView, url: String) {
                     Glide.with(this@MainActivity).load(url).into(image)
                 }
             }
         )
+        nineGridView.getImages()
+        nineGridView.addImages(mutableListOf())
+        nineGridView.removeImage(0)
+        nineGridView.notifyAdapter()
     }
 
     private fun initNineGridImageSelect() {
@@ -83,14 +92,18 @@ class MainActivity : AppCompatActivity() {
             R.id.iv_del,
             R.mipmap.ic_upload_pic,
             object : NineGridViewListener {
-                override fun bigPicShow(imagesWithoutAdd: List<ImagePickerBasicBean>, pos: Int) {
+                override fun bigPicShowNotify(
+                    imagesWithoutAdd: List<ImagePickerBasicBean>,
+                    pos: Int,
+                    view: View?
+                ) {
                     imagesWithoutAdd.forEach {
                         print(it.getImagePickerUrl())
                     }
                     log("$pos")
                 }
 
-                override fun addNewPic(count: Int) {
+                override fun addNewPicNotify(count: Int) {
                     nineGridView.addImages(
                         mutableListOf(
                             ImagePickerBasicBean.getInstance("https://www.wanandroid.com/blogimgs/50c115c2-cf6c-4802-aa7b-a4334de444cd.png"),
@@ -99,7 +112,7 @@ class MainActivity : AppCompatActivity() {
                     )
                 }
 
-                override fun delPic(pos: Int, imagePickerBasicBean: ImagePickerBasicBean) {
+                override fun delPicNotify(pos: Int, imagePickerBasicBean: ImagePickerBasicBean) {
                     log("${imagePickerBasicBean.getImagePickerUrl()}")
                     log("$pos")
                 }

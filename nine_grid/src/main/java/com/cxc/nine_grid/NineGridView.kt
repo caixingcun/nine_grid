@@ -2,6 +2,7 @@ package com.cxc.nine_grid
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import androidx.recyclerview.widget.GridLayoutManager
@@ -11,7 +12,7 @@ import kotlin.properties.Delegates
 /**
  * @author caixingcun
  * @date 2021/11/29
- * Description :
+ * Description : nine grid view format
  */
 class NineGridView : RelativeLayout {
     constructor(context: Context) : this(context, null)
@@ -22,7 +23,6 @@ class NineGridView : RelativeLayout {
         defStyleAttr
     ) {
         LayoutInflater.from(context).inflate(R.layout.layout_nine_pic_view, this, true)
-
     }
 
 
@@ -42,11 +42,15 @@ class NineGridView : RelativeLayout {
      * @param spanCount 每行数量
      * @param isEdit 是否可以编辑
      * @param data 数据集合 必须继承 ImagePickerBasicBean
-     * @param
+     * @param id_iv 图片item id
+     * @param id_iv_del 删除按钮 id
+     * @param resource_upload_img 上传背景图片
+     * @param nineGridViewListener 监听回调
+     * @param imagePickerEngine 图片加载引擎
      */
     fun setInit(
         maxSize: Int = 9,
-        spanCount:Int = 3,
+        spanCount: Int = 3,
         isEdit: Boolean = false,
         data: MutableList<ImagePickerBasicBean> = mutableListOf(),
         layout_item_resource: Int,
@@ -88,13 +92,38 @@ class NineGridView : RelativeLayout {
 
     /**
      * provider the real images
+     * @return return images have
      */
     fun getImages(): MutableList<ImagePickerBasicBean> {
         return mAdapter.getImagesWithoutAdd()
     }
 
+    /**
+     * notify adapter
+     */
+    fun notifyAdapter(){
+        mAdapter.notifyDataSetChanged()
+    }
+    /**
+     * remove a pos image
+     */
+    fun removeImage(position: Int) {
+        if (position >= maxSize || position >= getImages().size) {
+            Log.d("nine_grid", "removeImage 参数不合规")
+            return
+        }
+        delImage(position)
+    }
 
-    fun initView() {
+    private fun delImage(position: Int) {
+        val result = mAdapter.data[position]
+        mAdapter.remove(position)
+        mAdapter.setImages(mAdapter.getImagesWithoutAdd())
+        nineGridViewListener?.delPicNotify(position, result)
+    }
+
+
+    private fun initView() {
         this.maxSize = maxSize
         mRv = getChildAt(0) as RecyclerView
         mRv.layoutManager = GridLayoutManager(context, spanCount)
@@ -114,19 +143,20 @@ class NineGridView : RelativeLayout {
             when (view.id) {
                 //删除当前图片
                 id_iv_del -> {
-                    val result = mAdapter.data[position]
-                    mAdapter.remove(position)
-                    mAdapter.setImages(mAdapter.getImagesWithoutAdd())
-                    nineGridViewListener?.delPic(position, result)
+                    delImage(position)
                 }
                 id_iv_img -> {
                     nineGridViewListener?.apply {
                         if (mAdapter.getImageWithAdd()[position].isPhotoAdd()) {
                             // 添加
-                            addNewPic(maxSize - mAdapter.getImagesWithoutAdd().size)
+                            addNewPicNotify(maxSize - mAdapter.getImagesWithoutAdd().size)
                         } else {
                             //大图展示
-                            bigPicShow(mAdapter.getImagesWithoutAdd(), position)
+                            bigPicShowNotify(
+                                mAdapter.getImagesWithoutAdd(),
+                                position,
+                                mAdapter.getViewByPosition(position, id_iv_img)
+                            )
                         }
                     }
                 }

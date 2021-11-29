@@ -1,9 +1,11 @@
 package com.cxc.nine_grid
 
+import android.view.View
+
 interface NineGridViewListener {
-    fun bigPicShow(imagesWithoutAdd: List<ImagePickerBasicBean>, pos: Int)
+    fun bigPicShowNotify(imagesWithoutAdd: List<ImagePickerBasicBean>, pos: Int,view:View?)
 
-    fun addNewPic(count: Int)
+    fun addNewPicNotify(count: Int)
 
-    fun delPic(pos: Int, imagePickerBasicBean: ImagePickerBasicBean)
+    fun delPicNotify(pos: Int, imagePickerBasicBean: ImagePickerBasicBean)
 }
