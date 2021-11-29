@@ -6,6 +6,18 @@
  框架主要协助处理 删除 添加 逻辑及 删除按钮/添加按钮显示逻辑 
  支持图片框架（添加imageEngine）
 ~~~
+
+# 依赖
+~~~
+        project build.gradle
+          		maven { url 'https://jitpack.io' }  
+            
+        app build.gradle
+        
+                implementation 'com.github.caixingcun:nine_grid:v1.0'
+        
+~~~
+
 #函数
 ~~~
     fun setInit
