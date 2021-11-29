@@ -1,10 +1,10 @@
 package com.cxc.nine_grid
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import java.lang.RuntimeException
 
 
 /**
@@ -13,36 +13,66 @@ import java.lang.RuntimeException
  * Description :
  */
 class ImagePickerAdapter(
+    /**
+     * whether can edit （delete or add）
+     */
     var mIsEdit: Boolean = false,
+    /**
+     * pic data list
+     */
     data: MutableList<ImagePickerBasicBean>,
-    var MAX_SIZE: Int = 9
+    /**
+     * pic max size
+     */
+    var MAX_SIZE: Int = 9,
+    /**
+     * item layout
+     */
+    var layout_item: Int,
+    /**
+     * imageview id
+     */
+    var id_iv_img: Int,
+    /**
+     * imageView del
+     */
+    var id_iv_del: Int? = null,
+    /**
+     * upload icon resource
+     */
+    var resource_id_upload: Int?
 ) :
     BaseQuickAdapter<ImagePickerBasicBean, BaseViewHolder>(
-        R.layout.list_item_image,
+        layout_item,
         data
     ) {
 
     override fun convert(helper: BaseViewHolder, item: ImagePickerBasicBean) {
         helper.apply {
-            val iv = getView<ImageView>(R.id.iv_img)
-            val civDel = getView<ImageView>(R.id.civ_del)
-            addOnClickListener(R.id.civ_del)
-            addOnClickListener(R.id.iv_img)
+            val iv = getView<ImageView>(id_iv_img)
+            addOnClickListener(id_iv_img)
 
-            if (item.isPhotoAdd()) {
-                civDel.visibility = View.INVISIBLE
-            } else {
-                if (mIsEdit) {
-                    civDel.visibility = View.VISIBLE
+            id_iv_del?.let {
+                val ivDel = getView<ImageView>(it)
+                addOnClickListener(it)
+                if (item.isPhotoAdd()) {
+                    ivDel.visibility = View.INVISIBLE
                 } else {
-                    civDel.visibility = View.INVISIBLE
+                    if (mIsEdit) {
+                        ivDel.visibility = View.VISIBLE
+                    } else {
+                        ivDel.visibility = View.INVISIBLE
+                    }
                 }
             }
+
             if (item.isPhotoAdd()) {
-                iv.setImageResource(R.mipmap.ic_upload_pic)
+                resource_id_upload?.let {
+                    iv.setImageResource(it)
+                }
             } else {
                 if (engine == null) {
-                    throw RuntimeException("please set image engine")
+                    Log.d("nine_grid", "no image engine")
                 } else {
                     engine?.load(mContext, iv, item.getImagePickerUrl())
                 }
@@ -62,7 +92,7 @@ class ImagePickerAdapter(
         }.toMutableList()
     }
 
-    fun setImages(data: List<ImagePickerBasicBean>) {
+    fun setImages(data: MutableList<ImagePickerBasicBean>) {
         var temp = data.filter {
             !it.isPhotoAdd()
         }.toList()
@@ -73,7 +103,7 @@ class ImagePickerAdapter(
         setNewData(data)
     }
 
-    fun setImageEngine(imagePickerEngine: ImagePickerEngine) {
+    fun setImageEngine(imagePickerEngine: ImagePickerEngine?) {
         this.engine = imagePickerEngine
     }
 }
@@ -90,6 +120,14 @@ interface ImagePickerBasicBean {
             return object : ImagePickerBasicBean {
                 override fun getImagePickerUrl(): String {
                     return PHOTO_ADD
+                }
+            }
+        }
+
+        fun getInstance(url: String): ImagePickerBasicBean {
+            return object : ImagePickerBasicBean {
+                override fun getImagePickerUrl(): String {
+                    return url
                 }
             }
         }

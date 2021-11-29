@@ -7,13 +7,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:id="@+id/recycler_view"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="3"
-        tools:itemCount="9"
-        tools:listitem="@layout/list_item_image">
+        tools:itemCount="9"/>
 
-    </androidx.recyclerview.widget.RecyclerView>
 </RelativeLayout>
