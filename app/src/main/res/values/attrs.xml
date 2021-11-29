@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="NineGridViewStyle">
+        <attr name="nine_grid_layout" format="reference"/>
+        <attr name="image_limit" format="integer"/>
+    </declare-styleable>
+
+</resources>
