@@ -22,9 +22,11 @@ class NineGridView : RelativeLayout {
         attrs,
         defStyleAttr
     ) {
-        LayoutInflater.from(context).inflate(R.layout.layout_nine_pic_view, this, true)
+        flView = LayoutInflater.from(context)
+            .inflate(R.layout.layout_nine_pic_view, this, true) as RelativeLayout
     }
 
+    var flView: RelativeLayout? = null
 
     var maxSize: Int = 9
     var isEdit: Boolean = false
@@ -101,9 +103,10 @@ class NineGridView : RelativeLayout {
     /**
      * notify adapter
      */
-    fun notifyAdapter(){
+    fun notifyAdapter() {
         mAdapter.notifyDataSetChanged()
     }
+
     /**
      * remove a pos image
      */
@@ -125,7 +128,10 @@ class NineGridView : RelativeLayout {
 
     private fun initView() {
         this.maxSize = maxSize
-        mRv = getChildAt(0) as RecyclerView
+        mRv = flView?.getChildAt(0) as RecyclerView
+        if (mRv == null) {
+            return
+        }
         mRv.layoutManager = GridLayoutManager(context, spanCount)
         mAdapter = ImagePickerAdapter(
             mIsEdit = isEdit,
@@ -155,7 +161,7 @@ class NineGridView : RelativeLayout {
                             bigPicShowNotify(
                                 mAdapter.getImagesWithoutAdd(),
                                 position,
-                                mAdapter.getViewByPosition(mRv,position, id_iv_img)
+                                mAdapter.getViewByPosition(mRv, position, id_iv_img)
                             )
                         }
                     }
