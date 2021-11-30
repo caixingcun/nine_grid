@@ -22,11 +22,7 @@ class NineGridView : RelativeLayout {
         attrs,
         defStyleAttr
     ) {
-        flView = LayoutInflater.from(context)
-            .inflate(R.layout.layout_nine_pic_view, this, true) as RelativeLayout
     }
-
-    var flView: RelativeLayout? = null
 
     var maxSize: Int = 9
     var isEdit: Boolean = false
@@ -38,6 +34,9 @@ class NineGridView : RelativeLayout {
     var id_iv_img by Delegates.notNull<Int>()
     var id_iv_del: Int? = null
     var resource_upload_img: Int? = null
+
+    var layout_recycler_view_resource: Int? = null
+    var recycler_view_id: Int? = null
 
     /**
      * @param maxSize 最大选图数量
@@ -59,6 +58,8 @@ class NineGridView : RelativeLayout {
         id_iv: Int,
         id_iv_del: Int? = null,
         resource_upload_img: Int? = null,
+        layout_recycler_view_resource: Int,
+        recycler_view_id: Int,
         nineGridViewListener: NineGridViewListener,
         imagePickerEngine: ImagePickerEngine
     ) {
@@ -72,6 +73,10 @@ class NineGridView : RelativeLayout {
         this.spanCount = spanCount
         this.nineGridViewListener = nineGridViewListener
         this.imagePickerEngine = imagePickerEngine
+        this.layout_recycler_view_resource = layout_recycler_view_resource
+        this.recycler_view_id =recycler_view_id
+        LayoutInflater.from(context)
+            .inflate(layout_recycler_view_resource, this, true)
         initView()
     }
 
@@ -128,7 +133,7 @@ class NineGridView : RelativeLayout {
 
     private fun initView() {
         this.maxSize = maxSize
-        mRv = flView?.getChildAt(0) as RecyclerView
+        mRv = findViewById<RecyclerView>(this.recycler_view_id!!)
         if (mRv == null) {
             return
         }

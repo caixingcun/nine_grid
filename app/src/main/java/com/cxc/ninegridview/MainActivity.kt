@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity() {
             id_iv = R.id.iv_img,
             id_iv_del = R.id.iv_del,
             resource_upload_img = R.mipmap.ic_upload_pic,
+            R.layout.layout_nine_pic_view,
+            R.id.nine_grid_module_id_recycler_view,
             nineGridViewListener = object : NineGridViewListener {
                 override fun bigPicShowNotify(
                     imagesWithoutAdd: List<ImagePickerBasicBean>,
@@ -68,12 +70,13 @@ class MainActivity : AppCompatActivity() {
                     log("$pos")
                 }
             },
-            imagePickerEngine =  object : ImagePickerEngine {
+            imagePickerEngine = object : ImagePickerEngine {
                 override fun load(context: Context, image: ImageView, url: String) {
                     Glide.with(this@MainActivity).load(url).into(image)
                 }
             }
         )
+
         nineGridView.getImages()
         nineGridView.addImages(mutableListOf())
         nineGridView.removeImage(0)
@@ -91,6 +94,8 @@ class MainActivity : AppCompatActivity() {
             R.id.iv_img,
             R.id.iv_del,
             R.mipmap.ic_upload_pic,
+            R.layout.layout_nine_pic_view,
+            R.id.nine_grid_module_id_recycler_view,
             object : NineGridViewListener {
                 override fun bigPicShowNotify(
                     imagesWithoutAdd: List<ImagePickerBasicBean>,
