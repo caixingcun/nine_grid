@@ -15,13 +15,15 @@ import kotlin.properties.Delegates
  * Description : nine grid view format
  */
 class NineGridView : RelativeLayout {
-    constructor(context: Context) : this(context, null)
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    ) {
+
+    constructor(context: Context) : super(context) {
+        LayoutInflater.from(context).inflate(R.layout.layout_nine_pic_view, this, true)
+    }
+    constructor(context: Context,attributeSet: AttributeSet):super(context,attributeSet){
+        LayoutInflater.from(context).inflate(R.layout.layout_nine_pic_view, this, true)
+    }
+    constructor(context: Context,attributeSet: AttributeSet,defstyle:Int):super(context,attributeSet,defstyle){
+        LayoutInflater.from(context).inflate(R.layout.layout_nine_pic_view, this, true)
     }
 
     var maxSize: Int = 9
@@ -35,9 +37,6 @@ class NineGridView : RelativeLayout {
     var id_iv_del: Int? = null
     var resource_upload_img: Int? = null
 
-    var layout_recycler_view_resource: Int? = null
-    var recycler_view_id: Int? = null
-
     /**
      * @param maxSize 最大选图数量
      * @param spanCount 每行数量
@@ -48,8 +47,6 @@ class NineGridView : RelativeLayout {
      * @param resource_upload_img 上传背景图片
      * @param nineGridViewListener 监听回调
      * @param imagePickerEngine 图片加载引擎
-     * @param layout_recycler_view_resource recycler_view布局
-     * @param recycler_view_id recycler_view的id
      */
     fun setInit(
         maxSize: Int = 9,
@@ -60,8 +57,6 @@ class NineGridView : RelativeLayout {
         id_iv: Int,
         id_iv_del: Int? = null,
         resource_upload_img: Int? = null,
-        layout_recycler_view_resource: Int,
-        recycler_view_id: Int,
         nineGridViewListener: NineGridViewListener,
         imagePickerEngine: ImagePickerEngine
     ) {
@@ -75,10 +70,6 @@ class NineGridView : RelativeLayout {
         this.spanCount = spanCount
         this.nineGridViewListener = nineGridViewListener
         this.imagePickerEngine = imagePickerEngine
-        this.layout_recycler_view_resource = layout_recycler_view_resource
-        this.recycler_view_id =recycler_view_id
-        LayoutInflater.from(context)
-            .inflate(layout_recycler_view_resource, this, true)
         initView()
     }
 
@@ -135,7 +126,7 @@ class NineGridView : RelativeLayout {
 
     private fun initView() {
         this.maxSize = maxSize
-        mRv = findViewById<RecyclerView>(this.recycler_view_id!!)
+        mRv = findViewById(R.id.nine_grid_module_id_recycler_view)
         if (mRv == null) {
             return
         }
