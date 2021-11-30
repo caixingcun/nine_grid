@@ -14,7 +14,7 @@
             
         app build.gradle
         
-                implementation 'com.github.caixingcun:nine_grid:v1.0'
+                implementation 'com.github.caixingcun:nine_grid:v1.1'
         
 ~~~
 
@@ -73,6 +73,11 @@
             id_iv_del = R.id.iv_del,
             resource_upload_img = R.mipmap.ic_upload_pic,
             nineGridViewListener = object : NineGridViewListener {
+                /**
+                 * @param imagesWithoutAdd 图片集合
+                 * @param pos 点击位置
+                 * @param view 当前位置 view 用于专场动画
+                 */
                 override fun bigPicShowNotify(
                     imagesWithoutAdd: List<ImagePickerBasicBean>,
                     pos: Int,
@@ -83,7 +88,9 @@
                     }
                     log("$pos")
                 }
-
+                /**
+                 * @param count 剩余支持添加的图片数
+                 */
                 override fun addNewPicNotify(count: Int) {
                     nineGridView.addImages(
                         mutableListOf(
@@ -92,7 +99,10 @@
                         )
                     )
                 }
-
+                /**
+                 * @param pos 剩余支持添加的图片数
+                 * @param imagePickerBasicBean 删除的数据
+                 */
                 override fun delPicNotify(pos: Int, imagePickerBasicBean: ImagePickerBasicBean) {
                     log("${imagePickerBasicBean.getImagePickerUrl()}")
                     log("$pos")
