@@ -97,7 +97,7 @@ class ImagePickerAdapter(
             !it.isPhotoAdd()
         }.toList()
         val data = ArrayList(temp)
-        if (mIsEdit && itemCount < MAX_SIZE) {
+        if (mIsEdit && data.size < MAX_SIZE) {
             data.add(ImagePickerBasicBean.getPhotoAddBean())
         }
         setNewData(data)

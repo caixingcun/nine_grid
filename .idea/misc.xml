@@ -4,13 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android/nine-grid-view/app/src/main/res/layout/activity_main.xml" value="0.30416666666666664" />
+        <entry key="..\:/Android/nine-grid-view/app/src/main/res/layout/activity_nine_grid.xml" value="0.24909420289855072" />
         <entry key="..\:/Android/nine-grid-view/app/src/main/res/layout/layout_nine_pic_view.xml" value="0.2109375" />
         <entry key="..\:/Android/nine-grid-view/nine_grid/src/main/res/layout/layout_nine_pic_view.xml" value="0.20208333333333334" />
         <entry key="..\:/Android/nine-grid-view/nine_grid/src/main/res/layout/list_item_image.xml" value="0.28541666666666665" />
         <entry key="..\:/Android/work/NineGridView/app/src/main/res/layout/activity_nine_grid.xml" value="0.15760869565217392" />
         <entry key="..\:/Android/work/NineGridView/nine_grid/src/main/res/layout/layout_nine_pic_view.xml" value="0.20652173913043478" />
         <entry key="..\:/Android/work/NineGridView/nine_grid/src/main/res/layout/list_item_image.xml" value="0.20652173913043478" />
-        <entry key="..\:/Android/work/nine_grid/nine_grid/src/main/res/layout/layout_nine_pic_view.xml" value="0.221875" />
       </map>
     </option>
   </component>

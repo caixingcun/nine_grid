@@ -93,7 +93,7 @@ class NineGridView : RelativeLayout {
     fun addImages(moreImages: MutableList<ImagePickerBasicBean>) {
         var result = mAdapter.getImagesWithoutAdd()
         result.addAll(moreImages)
-        if (result.size > maxSize) {
+        if (result.size >= maxSize) {
             result = result.subList(0, maxSize)
         }
         mAdapter.setImages(result)
