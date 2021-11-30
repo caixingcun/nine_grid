@@ -48,6 +48,8 @@ class NineGridView : RelativeLayout {
      * @param resource_upload_img 上传背景图片
      * @param nineGridViewListener 监听回调
      * @param imagePickerEngine 图片加载引擎
+     * @param layout_recycler_view_resource recycler_view布局
+     * @param recycler_view_id recycler_view的id
      */
     fun setInit(
         maxSize: Int = 9,
