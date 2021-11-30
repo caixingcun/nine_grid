@@ -14,7 +14,7 @@
             
         app build.gradle
         
-                implementation 'com.github.caixingcun:nine_grid:v1.1'
+                implementation 'com.github.caixingcun:nine_grid:v1.4'
         
 ~~~
 
