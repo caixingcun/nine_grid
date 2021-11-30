@@ -155,7 +155,7 @@ class NineGridView : RelativeLayout {
                             bigPicShowNotify(
                                 mAdapter.getImagesWithoutAdd(),
                                 position,
-                                mAdapter.getViewByPosition(position, id_iv_img)
+                                mAdapter.getViewByPosition(mRv,position, id_iv_img)
                             )
                         }
                     }
