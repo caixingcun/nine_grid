@@ -142,6 +142,8 @@ class NineGridView : RelativeLayout {
         )
         mAdapter.setImageEngine(imagePickerEngine)
         mRv.adapter = mAdapter
+        //添加绑定 方便 通过 adapter获取 itemView
+        mAdapter.bindToRecyclerView(mRv)
         mAdapter.setImages(data!!)
         mAdapter.setOnItemChildClickListener { _, view, position ->
             when (view.id) {
